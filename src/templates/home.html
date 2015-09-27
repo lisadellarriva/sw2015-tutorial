@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SW2015 Assignment 4: homepage</title>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class='row'>
+				<div class='col-lg-12' style="padding-left: 0px; padding-right: 0px">
+					<h1>So let's work on sandwiches then... </h1>
+				</div>
+			</div>
+			</br></br>
+			<div class='row'>
+				<h3>EXPLORE OUR ONTOLOGY AS YOU WISH...</h3>
+				<hr></br>
+				<div class='col-lg-6'>
+					<p>Type the query you want you want to run over our ontology below and you'll show you the results!</p>
+					<p><b>Don't forget to unable/disable the reasoner! (It'll affect the results)</b></p>
+					<textarea id='query14' class='sparql' style='width: 100%' rows='10'>
+PREFIX : &lt;http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#&gt;
+
+SELECT ?x WHERE {
+	
+}
+					</textarea>
+					<input id="runReasonerCheckbox" type="checkbox" name="reasoner" value="reasoner"> Run reasoner</input>
+					<div><a id="link14" class='btn btn-primary'> Execute! </a></div>
+				</div>
+				<div class='col-lg-6'>
+					<h3>Results</h3>
+					<div id="linktarget14" class='well' style='height: 15em; scroll: both; overflow: auto;'></div>
+					<div>
+						<p>So you got different results when running the reasoner compared to when not running it?</p>
+						<p>We can explain that! <i><a id="reasonerExplainerLink">Click to show the explanation!</a></i></p>
+						<div id='reasonerExplainer' class='well' style='height: 15em; scroll: both; overflow: auto; display:none'>
+							<p>Well, what the reasoner basicly do is using the information already defined by the given ontology (i.e, relations, necessary/sufficient conditions, and all kinds of rules one can set for entities and properties) in order to infer new information (for examples: instances' classification; relations between classes and/or properties) and so add to what is already built.</p>
+							<p>Let's give a ilustrative example.</p>
+							<p>Imagine you created a new hot sandwich formed by white bread, hamburguer and spicy sauce.</p>
+							<p>From that, what is defined in the ontology is that there is a sandwich whose bread type is white, sauce flavor is spicy, has meat and its type is hamburguer and is hot. At this point, if you query for all sandwiches of type Hamburguer, this new one won't be part of the results! That is because the ontology doesn't know that this new sandwich not only match the class Sandwich, but also the classes such as Hamburguer, hotSandwich and a spicySandwich. That's what the reasoner is going to do!</p>
+							<p>When you run the reasoner, it will analyse the values of this new sandwich's properties, cross with classes' rules and add those new classifications for this new sandwich. Now, the ontology now that this new sandwich is also a hamburguer. So, if you now query for all hamburguers, this new one will be indeed be part of the results!</p>
+							<p id="reasonerExplainerHider"><i><a>Click to hide the explanation!</a></i></p>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			</br></br>
+			<div class='row'>
+				<h3>OR YOU CAN USE SOME SPECIFIC FEATURES.</h3>
+				<hr>
+				<div class='col-lg-6'>
+					<h4>List sandwiches by preferences</h4>
+					<div id='sw-preferences-wrapper' style='border: solid; border-width: 1px;'>
+						<div id='swpreferences-subwrapper'>
+							<div id='swType' class='col-lg-6'>
+								<p><b>Sandwich Type</b></p>
+								<input type="radio" name="sandwichType" value="Hamburguer">Hamburguer</input>
+								<input type="radio" name="sandwichType" value="Hotdog">Hotdog</input>
+								<input type="radio" name="sandwichType" value="VegetarianSandwich">Vegetarian</input>
+							</div>
+							<div id='swTemperature' class='col-lg-6'>
+								<p><b>Sandwich temperature</b></p>
+								<input type="radio" name="sandwichTemp" value="HotSandwich">Hot</input>
+								<input type="radio" name="sandwichTemp" value="ColdSandwich">Cold</input>
+							</div>
+						</div>
+						<div>
+							<p style='margin-left: 15px;'><input id='swSpicy' type="checkbox" name="sandwichSpicy" value="SpicySandwich" style="margin-top: 14px;"> with spicy sauce</input></p>
+						</div>
+					</div>
+					<div style='padding: 5px; align: center;'><a id='list-sandwich-button' class='btn btn-primary'>List results!</a></div>
+					<div id="linktarget15" class='well' style='height: 15em; scroll: both; overflow: auto; display: none;'></div>
+				</div>
+				
+				<div class='col-lg-6'>
+					<h4>Insert a new sandwich into the ontology</h4>
+					<div id="new-sandwich-wrapper" style='border: solid; border-width: 1px;'>
+						<div id='new-sandwich-head' style='padding: 5px;'>
+							<label for='new-sandwich-name' style='padding-right: 3px'><sup style='font-color:red;'>*</sup>Sandwich's name: </label>
+							<input id='new-sandwich-name' type="text" name='sandwichName'>
+						</div>
+						<div id='new-sandwich-body' style='padding: 5px; height: 182px'>
+							<div id='new-sandwich-bread' class='col-lg-6' style="width: 33%;">
+								<p><b><sup style='font-color:red;'>*</sup>Bread</b></p>
+								<input type="radio" name="sandwichBread" value="white">white</input></br>
+								<input type="radio" name="sandwichBread" value="wheat">wheat</input></br>
+								<input type="radio" name="sandwichBread" value="withCheese">with cheese</input></br>
+								<input type="radio" name="sandwichBread" value="dark">dark</input></br>
+							</div>
+							<div id='new-sandwich-sauce' class='col-lg-6' style="width: 33%;">
+								<p><b>Sauce</b></p>
+								<input type="checkbox" name="sandwichSauce" value="normal">normal</input></br>
+								<input type="checkbox" name="sandwichSauce" value="spicy">spicy</input></br>
+								<input type="checkbox" name="sandwichSauce" value="mustard">mustard</input></br>
+								<input type="checkbox" name="sandwichSauce" value="catchup">catchup</input></br>
+								<input type="checkbox" name="sandwichSauce" value="salty">salty</input></br>
+								<input type="checkbox" name="sandwichSauce" value="bittersweet">bittersweet</input></br>
+								<input type="checkbox" name="sandwichSauce" value="mayonnaise">mayonnaise</input></br>
+							</div>
+							<div id='new-sandwich-meat' class='col-lg-6' style="width: 34%;">
+								<p><b>Meat</b></p>
+								<input type="checkbox" name="hasMeat" value="no">No Meat</input></br>
+								<input type="checkbox" name="sandwichMeat" value="hamburguer">hamburguer</input></br>
+								<input type="checkbox" name="sandwichMeat" value="sausage">sausage</input></br>
+								<input type="checkbox" name="sandwichMeat" value="pork">pork</input></br>
+								<input type="checkbox" name="sandwichMeat" value="chicken">chicken</input></br>
+								<input type="checkbox" name="sandwichMeat" value="fish">fish</input></br>
+								<input type="checkbox" name="sandwichMeat" value="beef">beef</input></br>
+							</div>
+						</div>
+						<div id='new-sandwich-bottom' style='padding-top: 10px; height: 40px'>
+							<div class='col-lg-6'>
+								<label for='new-sandwich-salad' style='padding-right: 3px'> Salad: </label>
+								<input id='new-sandwich-salad' type="text" name='sandwichSalad'>
+							</div>
+							<div class='col-lg-6'>
+								<label for='new-sandwich-temp' style='padding-right: 3px'><sup style='font-color:red;'>*</sup>Temperature: </label>
+								<input type="radio" name="sandwichTemp" value="yes" style='padding-right: 3px'>hot</input>
+								<input type="radio" name="sandwichTemp" value="no" style='padding-right: 3px'>cold</input>
+							</div>							
+						</div>	
+					</div>
+					<div style='padding: 5px; align: center;'><a id='add-sandwich-button' class='btn btn-primary'>Add Sandwich!</a></div>
+					<div id="linktarget16" class='well' style='height: 15em; scroll: both; overflow: auto; display: none;'></div>
+				</div>
+			</div>
+
+		</div>
+
+		<script src='{{ url_for("static", filename="js/jquery-1.11.0.min.js") }}' type='text/javascript'></script>
+		<script src='{{ url_for("static", filename="js/tutorial.js") }}' type='text/javascript'></script>
+
+	</body>
+</head>
