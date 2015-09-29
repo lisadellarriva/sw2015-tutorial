@@ -1,0 +1,610 @@
+@prefix : <http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich> .
+
+<http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich> rdf:type owl:Ontology .
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sandwichBreadType
+
+:sandwichBreadType rdf:type owl:FunctionalProperty ,
+                            owl:ObjectProperty ;
+                   
+                   rdfs:range :SandwichBread ;
+                   
+                   owl:propertyDisjointWith :sandwichMeatType .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sandwichHasMeat
+
+:sandwichHasMeat rdf:type owl:FunctionalProperty ,
+                          owl:ObjectProperty ;
+                 
+                 rdfs:range :SandwichBooleanValues .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sandwichIsHot
+
+:sandwichIsHot rdf:type owl:FunctionalProperty ,
+                        owl:ObjectProperty ;
+               
+               rdfs:comment "This property defines whether the sandwich hot or cold (assuming that when it's not hot, then it's cold)." ;
+               
+               rdfs:range :SandwichBooleanValues .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sandwichMeatType
+
+:sandwichMeatType rdf:type owl:ObjectProperty ;
+                  
+                  rdfs:range :SandwichMeat .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sandwichSauceFlavor
+
+:sandwichSauceFlavor rdf:type owl:ObjectProperty ;
+                     
+                     rdfs:range :SandwichSauce .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sandwichSaladType
+
+:sandwichSaladType rdf:type owl:DatatypeProperty ,
+                            owl:FunctionalProperty ;
+                   
+                   rdfs:range rdfs:Literal .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#ColdSandwich
+
+:ColdSandwich rdf:type owl:Class ;
+              
+              owl:equivalentClass [ rdf:type owl:Restriction ;
+                                    owl:onProperty :sandwichIsHot ;
+                                    owl:hasValue :no
+                                  ] ;
+              
+              rdfs:subClassOf :Sandwich ;
+              
+              owl:disjointWith :HotSandwich .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#Hamburguer
+
+:Hamburguer rdf:type owl:Class ;
+            
+            owl:equivalentClass [ rdf:type owl:Restriction ;
+                                  owl:onProperty :sandwichMeatType ;
+                                  owl:hasValue :hamburguer
+                                ] ;
+            
+            rdfs:subClassOf :Sandwich ;
+            
+            owl:disjointWith :VegetarianSandwich .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#HotSandwich
+
+:HotSandwich rdf:type owl:Class ;
+             
+             owl:equivalentClass [ rdf:type owl:Restriction ;
+                                   owl:onProperty :sandwichIsHot ;
+                                   owl:hasValue :yes
+                                 ] ;
+             
+             rdfs:subClassOf :Sandwich .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#Hotdog
+
+:Hotdog rdf:type owl:Class ;
+        
+        owl:equivalentClass [ rdf:type owl:Restriction ;
+                              owl:onProperty :sandwichMeatType ;
+                              owl:hasValue :sausage
+                            ] ;
+        
+        rdfs:subClassOf :Sandwich ;
+        
+        owl:disjointWith :VegetarianSandwich .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#Sandwich
+
+:Sandwich rdf:type owl:Class ;
+          
+          rdfs:subClassOf [ rdf:type owl:Class ;
+                            owl:intersectionOf ( [ rdf:type owl:Class ;
+                                                   owl:unionOf ( [ rdf:type owl:Class ;
+                                                                   owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                          owl:onProperty :sandwichMeatType ;
+                                                                                          owl:someValuesFrom :SandwichMeat
+                                                                                        ]
+                                                                                        [ rdf:type owl:Restriction ;
+                                                                                          owl:onProperty :sandwichHasMeat ;
+                                                                                          owl:hasValue :yes
+                                                                                        ]
+                                                                                      )
+                                                                 ]
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty :sandwichHasMeat ;
+                                                                   owl:hasValue :no
+                                                                 ]
+                                                               )
+                                                 ]
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :sandwichBreadType ;
+                                                   owl:someValuesFrom :SandwichBread
+                                                 ]
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :sandwichSauceFlavor ;
+                                                   owl:someValuesFrom :SandwichSauce
+                                                 ]
+                                               )
+                          ] .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#SandwichBooleanValues
+
+:SandwichBooleanValues rdf:type owl:Class ;
+                       
+                       owl:equivalentClass [ rdf:type owl:Class ;
+                                             owl:oneOf ( :no
+                                                         :yes
+                                                       )
+                                           ] .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#SandwichBread
+
+:SandwichBread rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:oneOf ( :dark
+                                                 :withCheese
+                                                 :white
+                                                 :wheat
+                                               )
+                                   ] .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#SandwichMeat
+
+:SandwichMeat rdf:type owl:Class ;
+              
+              owl:equivalentClass [ rdf:type owl:Class ;
+                                    owl:oneOf ( :pork
+                                                :beef
+                                                :chicken
+                                                :sausage
+                                                :fish
+                                                :hamburguer
+                                              )
+                                  ] .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#SandwichSalad
+
+:SandwichSalad rdf:type owl:Class .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#SandwichSauce
+
+:SandwichSauce rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:oneOf ( :catchup
+                                                 :normal
+                                                 :mustard
+                                                 :bittersweet
+                                                 :salty
+                                                 :spicy
+                                                 :mayonnaise
+                                               )
+                                   ] .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#SpicySandwich
+
+:SpicySandwich rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Restriction ;
+                                     owl:onProperty :sandwichSauceFlavor ;
+                                     owl:hasValue :spicy
+                                   ] ;
+               
+               rdfs:subClassOf :Sandwich .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#VegetarianSandwich
+
+:VegetarianSandwich rdf:type owl:Class ;
+                    
+                    owl:equivalentClass [ rdf:type owl:Restriction ;
+                                          owl:onProperty :sandwichHasMeat ;
+                                          owl:hasValue :no
+                                        ] ;
+                    
+                    rdfs:subClassOf :Sandwich .
+
+
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#beef
+
+:beef rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#bittersweet
+
+:bittersweet rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#catchup
+
+:catchup rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#chicken
+
+:chicken rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#dark
+
+:dark rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#fish
+
+:fish rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#hamburguer
+
+:hamburguer rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#hamburguer_1
+
+:hamburguer_1 rdf:type owl:NamedIndividual ;
+              
+              rdfs:label "Regular hamburguer" ;
+              
+              :sandwichSaladType "tomatos" ;
+              
+              :sandwichMeatType :hamburguer ;
+              
+              :sandwichSauceFlavor :normal ;
+              
+              :sandwichBreadType :white ;
+              
+              :sandwichHasMeat :yes .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#hamburguer_with_bacon
+
+:hamburguer_with_bacon rdf:type :Sandwich ,
+                                owl:NamedIndividual ;
+                       
+                       rdfs:label "Hamburguer with Bacon" ;
+                       
+                       :sandwichMeatType :hamburguer ;
+                       
+                       :sandwichSauceFlavor :mayonnaise ;
+                       
+                       :sandwichBreadType :wheat ;
+                       
+                       :sandwichHasMeat :yes ;
+                       
+                       :sandwichIsHot :yes .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#hamburguer_without_salad
+
+:hamburguer_without_salad rdf:type :Sandwich ,
+                                   owl:NamedIndividual ;
+                          
+                          rdfs:label "Hamburguer without Salad" ;
+                          
+                          :sandwichMeatType :hamburguer ;
+                          
+                          :sandwichSauceFlavor :normal ;
+                          
+                          :sandwichBreadType :white ;
+                          
+                          :sandwichHasMeat :yes ;
+                          
+                          :sandwichIsHot :yes .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#hotdog_1
+
+:hotdog_1 rdf:type :Sandwich ,
+                   owl:NamedIndividual ;
+          
+          rdfs:label "Regular Hotdog" ;
+          
+          :sandwichSauceFlavor :catchup ,
+                               :mayonnaise ,
+                               :mustard ;
+          
+          :sandwichMeatType :sausage ;
+          
+          :sandwichBreadType :white ;
+          
+          :sandwichHasMeat :yes ;
+          
+          :sandwichIsHot :yes .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#mayonnaise
+
+:mayonnaise rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#mustard
+
+:mustard rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#no
+
+:no rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#normal
+
+:normal rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#pork
+
+:pork rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#salty
+
+:salty rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sandwich_1
+
+:sandwich_1 rdf:type :Sandwich ,
+                     owl:NamedIndividual ;
+            
+            rdfs:label "Spicy Fish Sandwich" ;
+            
+            :sandwichSaladType "tomato" ;
+            
+            :sandwichMeatType :fish ;
+            
+            :sandwichIsHot :no ;
+            
+            :sandwichSauceFlavor :spicy ;
+            
+            :sandwichBreadType :white ;
+            
+            :sandwichHasMeat :yes .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sandwich_2
+
+:sandwich_2 rdf:type :Sandwich ,
+                     owl:NamedIndividual ;
+            
+            rdfs:label "Spicy Beef+Pork Sandwich" ;
+            
+            :sandwichMeatType :beef ,
+                              :pork ;
+            
+            :sandwichSauceFlavor :spicy ;
+            
+            :sandwichBreadType :wheat ;
+            
+            :sandwichHasMeat :yes ;
+            
+            :sandwichIsHot :yes .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sandwich_3
+
+:sandwich_3 rdf:type :Sandwich ,
+                     owl:NamedIndividual ;
+            
+            rdfs:label "Chicken Sandwich (cheese bread)" ;
+            
+            :sandwichSaladType "tomatos" ;
+            
+            :sandwichMeatType :chicken ;
+            
+            :sandwichSauceFlavor :salty ;
+            
+            :sandwichBreadType :withCheese ;
+            
+            :sandwichHasMeat :yes ;
+            
+            :sandwichIsHot :yes .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sandwich_4
+
+:sandwich_4 rdf:type :Sandwich ,
+                     owl:NamedIndividual ;
+            
+            rdfs:label "Test: sausage+hamburguer" ;
+            
+            :sandwichSauceFlavor :catchup ;
+            
+            :sandwichMeatType :hamburguer ;
+            
+            :sandwichSauceFlavor :mayonnaise ,
+                                 :mustard ;
+            
+            :sandwichMeatType :sausage ;
+            
+            :sandwichSauceFlavor :spicy ;
+            
+            :sandwichBreadType :white ;
+            
+            :sandwichHasMeat :yes ;
+            
+            :sandwichIsHot :yes .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#sausage
+
+:sausage rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#spicy
+
+:spicy rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#vegetarian_sandwich_1
+
+:vegetarian_sandwich_1 rdf:type :Sandwich ,
+                                owl:NamedIndividual ;
+                       
+                       rdfs:label "Regular vegetarian Sandwich" ;
+                       
+                       :sandwichSaladType "tomatos, carrot and lettuce" ;
+                       
+                       :sandwichHasMeat :no ;
+                       
+                       :sandwichIsHot :no ;
+                       
+                       :sandwichSauceFlavor :normal ;
+                       
+                       :sandwichBreadType :wheat .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#wheat
+
+:wheat rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#white
+
+:white rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#withCheese
+
+:withCheese rdf:type owl:NamedIndividual .
+
+
+
+###  http://www.semanticweb.org/lisa/ontologies/2015/8/sandwich#yes
+
+:yes rdf:type owl:NamedIndividual .
+
+
+
+
+
+#################################################################
+#
+#    General axioms
+#
+#################################################################
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :no
+                        :yes
+                      )
+] .
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :SandwichBread
+                :SandwichMeat
+                :SandwichSalad
+                :SandwichSauce
+              )
+] .
+
+
+
+
+###  Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net
