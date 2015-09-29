@@ -64,7 +64,7 @@ $('#link14').on('click', function(e){
 	var reasoner = false;
 	if ($('#runReasonerCheckbox:checked').val()) {
 		reasoner = true;
-	} 
+	}
 	
 	$.get('/sparql',data={'endpoint': endpoint, 'query': query, 'format': format, 'reasoner': reasoner}, function(json){
 		console.log(json);
@@ -204,7 +204,7 @@ $('#add-sandwich-button').on('click', function(e){
 	var swSauce = $('input[name=sandwichSauce]:checked');
 	var swMeat = $('input[name=sandwichMeat]:checked');
 	var swSalad = $('input[name=sandwichSalad]').val();
-	var swTemp = $('input[name=sandwichTemp]:checked').val();
+	var swTemp = $('input[name=swTemp]:checked').val();
 	var swHasMeat = true; 
 	if ($('input[name=hasMeat]:checked').val()) {
 		swHasMeat = false;
